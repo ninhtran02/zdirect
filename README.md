@@ -41,34 +41,72 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 
 1. Log onto your own HPC account. 
 
-2. Depending on the version of R available in your own HPC system, you may want to change the line
+2. Create a slurm file called ** as follows:
 ```
-module load r/4.0.0
+#!/bin/bash
+#SBATCH --job-name=dFDR_bimodal
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --mem=3500
+#SBATCH --time=00-80:00:00
+
+nullprop=$1
+mu=$2
+symm=$3
+rho=$4
+
+
+module --force purge
+module load foss/2022a R/4.2.2
+
+
+Rscript --vanilla main_bimodal2.R $nullprop $mu $symm $rho
+
 ```
-in the \texttt{job\_submission\_bimodal.slurm} and \texttt{job\_submission\_skewnormal.slurm} files to, say,
+
+Furthermore, create a slurm file called *batch_submission_bimodal.slurm* as follows:
 ```
-module load r/4.1.0
+#!/bin/bash
+
+
+for nullprop in 0 0.2 0.5 0.8
+do
+
+  for mu in 0.5 1 1.5 2 2.5 3 
+  do
+  
+    for symm in 0.5 0.75 1
+    do
+    	for rho in 0 0.50 -0.50
+    	do
+  
+              sbatch /data/gpfs/projects/punim1426/ZDIRECT/job_submission_bimodal.slurm $nullprop $mu $symm $rho
+	
+  	done
+    
+      done
+  
+  done
+
+done
+
+
 ```
-You can check the versions of R available in your system with the command 
-```
-module avail
-```
-3. Make sure the  \texttt{sn}, \texttt{ashr} and \texttt{Rmosek} R packages are properly installed in the version of R you plan to use. In particular, 
+
+
+4. Make sure the  *sn*, *ashr*, *dbh* and *Rmosek* R packages are properly installed in the version of R you plan to use. In particular, 
 
     - The installation instructions of \texttt{ashr} can be found in Matt Stephen's [GitHub page](https://github.com/stephens999/ashr).
 
-    - The installation instructions of \texttt{Rmosek} can be found in \url{https://docs.mosek.com/latest/rmosek/install-interface.html}. The \texttt{Rmosek} in turn depends on \texttt{MOSEK}, which requires a license; a free one for 365 days can be obtained at 
+    - The installation instructions of \texttt{Rmosek} can be found in [here]({https://docs.mosek.com/latest/rmosek/install-interface.html) . The *Rmosek* in turn depends on *MOSEK*, which requires a license; a free one for 365 days can be obtained [here](https://www.mosek.com/products/academic-licenses/) 
     
+
+5. In your HPC account, change your current directory to the ZDIRECT folder using the ``cd" command:
 ```
-\url{https://www.mosek.com/products/academic-licenses/}.
+cd    (your own working directory)/ZDIRECT
 ```
 
-\item In your HPC account, change your current directory to the ZDIRECT folder using the ``cd" command:
-\begin{center}
-\texttt{cd} \quad  (your own working directory)\texttt{/ZDIRECT}
-\end{center}
-
-\item To submit the jobs, run the two files \texttt{batch\_submission\_skewnormal.slurm} and \texttt{batch\_submission\_bimodal.slurm} with the two commands:
+6. To submit the jobs, run the two files \texttt{batch\_submission\_skewnormal.slurm} and \texttt{batch\_submission\_bimodal.slurm} with the two commands:
 \begin{center}
 \texttt{./batch\_submission\_skewnormal.slurm}
 \end{center}
