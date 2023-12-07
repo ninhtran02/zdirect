@@ -41,32 +41,30 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 
 1. Log onto your own HPC account. 
 
-2 Depending on the version of R available in your own HPC system, you may want to change the line
+2. Depending on the version of R available in your own HPC system, you may want to change the line
 ```
 \texttt{module load r/4.0.0}
 ```
 in the \texttt{job\_submission\_bimodal.slurm} and \texttt{job\_submission\_skewnormal.slurm} files to, say,
-\begin{center}
+```
 \texttt{module load r/4.1.0}
-\end{center}
+```
 You can check the versions of R available in your system with the command 
-\begin{center}
+```
 \texttt{module avail}
-\end{center}
-\item Make sure the  \texttt{sn}, \texttt{ashr} and \texttt{Rmosek} R packages are properly installed in the version of R you plan to use. In particular, 
-\begin{enumerate}
+```
+3. Make sure the  \texttt{sn}, \texttt{ashr} and \texttt{Rmosek} R packages are properly installed in the version of R you plan to use. In particular, 
 
-\item  The installation instructions of \texttt{ashr} can be found in Matt Stephen's GitHub page:
-\begin{center}
+    - The installation instructions of \texttt{ashr} can be found in Matt Stephen's GitHub page:
+```
   \url{https://github.com/stephens999/ashr}. 
-\end{center}
-\item The installation instructions of \texttt{Rmosek} can be found in \url{https://docs.mosek.com/latest/rmosek/install-interface.html}. The \texttt{Rmosek} in turn depends on \texttt{MOSEK}, which requires a license; a free one for 365 days can be obtained at 
-\begin{center}
+```
 
+    - The installation instructions of \texttt{Rmosek} can be found in \url{https://docs.mosek.com/latest/rmosek/install-interface.html}. The \texttt{Rmosek} in turn depends on \texttt{MOSEK}, which requires a license; a free one for 365 days can be obtained at 
+    
+```
 \url{https://www.mosek.com/products/academic-licenses/}.
-
-\end{center}
-\end{enumerate}
+```
 
 \item In your HPC account, change your current directory to the ZDIRECT folder using the ``cd" command:
 \begin{center}
