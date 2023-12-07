@@ -43,22 +43,19 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 
 2. Depending on the version of R available in your own HPC system, you may want to change the line
 ```
-\texttt{module load r/4.0.0}
+module load r/4.0.0
 ```
 in the \texttt{job\_submission\_bimodal.slurm} and \texttt{job\_submission\_skewnormal.slurm} files to, say,
 ```
-\texttt{module load r/4.1.0}
+module load r/4.1.0
 ```
 You can check the versions of R available in your system with the command 
 ```
-\texttt{module avail}
+module avail
 ```
 3. Make sure the  \texttt{sn}, \texttt{ashr} and \texttt{Rmosek} R packages are properly installed in the version of R you plan to use. In particular, 
 
-    - The installation instructions of \texttt{ashr} can be found in Matt Stephen's GitHub page:
-```
-  \url{https://github.com/stephens999/ashr}. 
-```
+    - The installation instructions of \texttt{ashr} can be found in Matt Stephen's [GitHub page](https://github.com/stephens999/ashr).
 
     - The installation instructions of \texttt{Rmosek} can be found in \url{https://docs.mosek.com/latest/rmosek/install-interface.html}. The \texttt{Rmosek} in turn depends on \texttt{MOSEK}, which requires a license; a free one for 365 days can be obtained at 
     
