@@ -37,7 +37,7 @@ STS_rej <- STS(pv = pv, alpha = 0.1, lambdas = 0.5)
 STS_rej
 ```
 ## How to reproduce the simulation results for "Adaptive Procedures for Directional False Discovery Rate Control"
-To reproduce the simulation results in an efficient manner, we assume the reader has access to an  account in a high performance computing (HPC) system running the \emph{Slurm Workload Manager}. Follow the steps below:
+To reproduce the simulation results in an efficient manner, we assume the reader has access to an  account in a high performance computing (HPC) system running the *Slurm Workload Manager8. Follow the steps below:
 
 1. Log onto your own HPC account.
 
