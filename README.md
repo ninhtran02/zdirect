@@ -18,7 +18,7 @@ sigma_vec <- rep(1,1000)
 zv <- theta + rnorm(1000, sd = sigma_vec)
 pv <- 2*pnorm(-abs(zv))
 
-
+# ZDIRECT
 zdirect_obj <- zdirect(betahat= zv,
                        sebetahat = sigma_vec,
                        s_l = rep(0.2,1000), s_r =  rep(0.8,1000),
@@ -29,7 +29,7 @@ zdirect_obj <- zdirect(betahat= zv,
                        altweight = 1e+08,
                        nfits = 200,
                        epsilon = 1e-10)
-# Rejections
+# ZDIRECT rejections
 zdirect_obj$rej_set
 
 # STS
