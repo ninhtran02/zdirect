@@ -301,7 +301,7 @@ done
 ```
 
 
-4. Make sure the  *sn*, *ashr*, *dbh* and *Rmosek* R packages are properly installed in the version of R you plan to use. In particular, 
+4. Make sure the  *REBayes*, *ashr*, *dbh* and *Rmosek* R packages are properly installed in the version of R you plan to use. In particular, 
 
     - The installation instructions of \texttt{ashr} can be found in Matt Stephen's [GitHub page](https://github.com/stephens999/ashr).
 
@@ -315,10 +315,10 @@ cd    (your own working directory)/ZDIRECT
 
 6. To submit the jobs, run the two files *batch\_submission\_bimodal.slurm* with the command:
 ```
-\texttt{./batch\_submission\_bimodal.slurm}
+sbatch batch_submission_bimodal.slurm
 ```
 
-7. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within \texttt{ZDIRECT/simResults}.
+7. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within *ZDIRECT/simResults*, *ZDIRECT/simResultsrhopos05*, *ZDIRECT/simResultsrhopos08*, *ZDIRECT/simResultsrhoneg05* and *ZDIRECT/simResultsrhoneg08*.
 
 
 
@@ -327,33 +327,235 @@ cd    (your own working directory)/ZDIRECT
 
 Assuming the simulation results have been reproduced as in the prior section:
 
-
-\begin{enumerate}
-\item Log onto your own HPC account.
+1. Log onto your own HPC account and download the folders *ZDIRECT/simResults*, *ZDIRECT/simResultsrhopos05*, *ZDIRECT/simResultsrhopos08*, *ZDIRECT/simResultsrhoneg05* and *ZDIRECT/simResultsrhoneg08* locally on your PC in a folder called *ZDIRECT*.
 
 
+2. Run the following R script locally on your PC:
+```
+library(ggplot2)
+library(latex2exp)
+#setwd("< ONE OF THE FOLLOWING LOCAL FILES ZDIRECT/simResults, ZDIRECT/simResultsrhopos05, ZDIRECT/simResultsrhopos08, ZDIRECT/simResultsrhoneg05 OR ZDIRECT/simResultsrhoneg08>")
+setwd("<ONE OF >")
+
+method_choice = c(
+  "zdirect",
+  "Storey",
+  "StoreyAdaptive",
+  "BH",
+  "ash",
+  "lfsr",
+  "GR",
+  "dBH")
+method_names = c(
+  "zdirect",
+  "Storey",
+  "StoreyAdaptive",
+  "BH",
+  "ash",
+  "lfsr",
+  "GR",
+  "dBH")
+method_labels = c(
+  "ZDIRECT",
+  "Storey_dir",
+  "aStorey_dir",
+  "BH_dir",
+  "ASH",
+  "LFSR",
+  "GR",
+  "dBH")
+method_colors = c(
+  "red",
+  "purple", "#00BCE3",
+  "blue", "lightgreen",  "plum4", "orange", "hotpink"
+)
+
+names(method_colors) = method_names
+
+method_labels = unname(TeX(c("ZDIRECT", "$STS_{dir}$", "$aSTS_{dir}$", "$BH_{dir}$", "ASH", "LFSR", "GR", "dBH" )))
+
+scale_shape_values = 0:(length(method_names)-1)
+scale_linetype_values = c(1,1,1, 2:(length(method_names)-2))
+
+nullprop_choice = c(0, 0.2,  0.5, 0.8)
+symm_choice = c(0.5, 0.75, 1)
+# nullprop_choice = c( 0.8)
+# symm_choice = c(0.9)
+
+mu_choice = seq(0.5, 2.5, by = 0.5)
+
+nullprop_vec = c()
+mu_vec = c()
+symm_vec = c()
+method_vec = c()
+FDR = c()
+TPR = c()
 
 
-\item In your HPC account, load  R using the command, say, 
-\begin{center}
-\texttt{module load r/4.0.0}
-\end{center}
-(You may need to change ``4.0.0" to ``4.1.0", if that is your own version of R)
+for (nullprop in nullprop_choice){
+  for(mu in mu_choice){
+    for (symm in symm_choice){
+      for (method in method_choice){
+        filepath = paste(
+          "/nullprop", nullprop,
+          "mu", mu,
+          "symm", symm ,
+          ".RData", sep = "" )
+        load(paste0( getwd(),  filepath))
+        nullprop_vec  = c(nullprop_vec , nullprop)
+        mu_vec  = c(mu_vec , mu)
+        symm_vec = c(symm_vec, symm)
+        method_vec = c(method_vec, method)
+        FDR = c( FDR,  mean(eval(as.symbol(paste0("FDP_",  method)))))
+        TPR = c( TPR,  mean(eval(as.symbol(paste0("TPP_",  method)))))
+      }
+    }
+  }
+}
 
-\item Make sure the R package \texttt{ggpubr} has been properly installed in R.
+data = data.frame(nullprop_vec, mu_vec, symm_vec, method_vec, FDR, TPR)
 
-\item Change your current directory to the ZDIRECT folder using the ``cd" command:
-\begin{center}
-\texttt{cd} \quad  (your own working directory)\texttt{/ZDIRECT}
-\end{center}
+# symm_names= paste0("symm = ", symm_choice)
+symm_vec <- as.factor(symm_vec)
+data$symm_vec <- as.factor(data$symm_vec)
+nullprop_vec <- as.factor(nullprop_vec)
+data$nullprop_vec <- as.factor(data$nullprop_vec)
 
-\item Run the two command lines:
-\begin{center}
-\texttt{Rscript plot\_skewnormal.R}
-\end{center}
-\begin{center}
-\texttt{Rscript plot\_bimodal.R}
-\end{center}
+symm_names_list <- list(
+  '0.5'=TeX(c("$v = 0.5$")),
+  '0.75'=TeX(c("$v = 0.75$")),
+  '1'=TeX(c("$v = 1$"))
+)
 
-\item The two pdf files for the figures will then appear in the ZDIRECT folder. 
-\end{enumerate}
+nullprop_names_list <- list(
+  '0'=TeX(c("$w = 0$")),
+  '0.2'=TeX(c("$w = 0.2$")),
+  '0.5'=TeX(c("$w = 0.5$")),
+  '0.8'=TeX(c("$w = 0.8$"))
+)
+
+symmnullprop_labeller <- function(variable,value){
+  if (variable=='symm_vec') {
+    return(symm_names_list[value])
+  } else {
+    return(nullprop_names_list[value])
+  }
+}
+
+
+grid_2d_FDR = facet_grid( nullprop_vec ~ symm_vec,
+                          scales = "free",
+                          labeller = symmnullprop_labeller)
+
+grid_2d_TPR = facet_grid(nullprop_vec ~ symm_vec,
+                         scales = "free",
+                         labeller = symmnullprop_labeller)
+
+
+#
+# ggplot_list = list()
+# count =0
+# for (target in  c("FDR", "TPR")){
+#   count = count +1
+#   if (target == "FDR") {
+#     # ylab_name = "False discovery rate"
+#     ylab_name = ""
+#     out_name = paste0("~/Dropbox/punim1304/ZDIRECT/icml2022/FDR_Plot.pdf")
+#     legend_pos = "bottom"
+#   }
+#   if (target == "TPR") {
+#     # ylab_name = "True positive rate"
+#     ylab_name = ""
+#     out_name = paste0("~/Dropbox/punim1304/ZDIRECT/icml2022/TPR_Plot.pdf")
+#     legend_pos = "bottom"
+#   }
+
+
+
+ggobj_FDR = ggplot(data,
+                   aes(x=mu_vec,
+                       y = FDR,
+                       group=method_vec,
+                       colour = method_vec,
+                       shape = method_vec)) +
+  geom_line(aes(linetype=method_vec))+
+  geom_point(aes(shape=method_vec)) +
+  xlab(expression(xi)) +
+  ylab("Directional false discovery rate") +
+  scale_color_manual(name="",
+                     breaks = method_names,
+                     labels= method_labels,
+                     values=method_colors) +
+  scale_shape_manual(name="",
+                     breaks = method_names,
+                     labels= method_labels,
+                     values=scale_shape_values)+
+  scale_linetype_manual(name="",
+                        breaks = method_names,
+                        labels=method_labels,
+                        values=scale_linetype_values)+
+  geom_hline(yintercept=0.10) +
+  ylim(c(0,0.20)) +
+  grid_2d_FDR+
+  guides(colour = guide_legend(nrow = 1)) +
+  theme_bw()+
+  theme(strip.text.x = element_text(size = 12), strip.text.y = element_text(size = 12))
+
+
+
+
+ggobj_TPR = ggplot(data,
+                   aes(x=mu_vec,
+                       y = TPR,
+                       group=method_vec,
+                       colour = method_vec,
+                       shape = method_vec)) +
+  geom_line(aes(linetype=method_vec))+
+  geom_point(aes(shape=method_vec)) +
+  xlab(expression(xi)) +
+  ylab("True positive rate") +
+  scale_color_manual(name="",
+                     breaks = method_names,
+                     labels= method_labels,
+                     values=method_colors) +
+  scale_shape_manual(name="",
+                     breaks = method_names,
+                     labels= method_labels,
+                     values=scale_shape_values)+
+  scale_linetype_manual(name="",
+                        breaks = method_names,
+                        labels=method_labels,
+                        values=scale_linetype_values)+
+  grid_2d_TPR +
+  guides(colour = guide_legend(nrow = 1)) +
+  theme_bw()+
+  theme(strip.text.x = element_text(size = 12), strip.text.y = element_text(size = 12))
+
+
+
+
+
+
+ggobj = ggpubr::ggarrange(ggobj_FDR, ggobj_TPR, ncol=1, nrow=2, common.legend = TRUE, legend="bottom")
+
+ggobj
+
+# if (target == "TPR"){
+#   fig_height = 4
+#   fig_width = 4
+# }
+# if (target == "FDR"){
+#   fig_height = 4
+#   fig_width = 4
+# }
+
+ggobj
+# save picture
+out_name = paste0("plot.pdf")
+pdf(file = out_name,
+    width = 8.5, height = 11.5)
+ggobj
+dev.off()
+
+```
+
