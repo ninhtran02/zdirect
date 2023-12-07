@@ -14,7 +14,7 @@
 #' @param nfits A scalar that ensures that \eqn{\hat{g}_t(\cdot)} is only re-estimated every \eqn{\lceil m / \texttt{nfits} \rceil} steps where \eqn{m} is the length of \eqn{\texttt{betahat}}.
 #' @param epsilon A small scalar which widens the width of the non-masked data set at each iteration.
 #'
-#' @return
+#' @return The rejection indices.
 #' @export
 #'
 #' @examples

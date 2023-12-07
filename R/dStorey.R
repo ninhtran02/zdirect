@@ -45,7 +45,7 @@ dStorey <- function(p,alpha, B = 1000, lambdas = seq(0.01,0.99,0.01)){
 #' @param B Number of bootstrap samples.
 #' @param lambdas A numeric of candidate \eqn{\lambda} values for the automatic directional Storey, Taylor and Siegmund procedure. If a single value is provided, then the standard directional Storey, Taylor and Siegmund procedure will run.
 #'
-#' @return The rejections indices.
+#' @return The rejection indices.
 #' @export
 #'
 #' @examples

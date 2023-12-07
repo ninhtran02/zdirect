@@ -41,6 +41,9 @@ zdirect(
 
 \item{epsilon}{A small scalar which widens the width of the non-masked data set at each iteration.}
 }
+\value{
+The rejection indices.
+}
 \description{
 A procedure that controls the directional false discovery rate via "data masking" for z-values of the form \eqn{z_i \sim \text{N}(\theta,\sigma_i)}. If the z-values available are noncentral t-distributed, \eqn{\texttt{noncentral\_t\_normalization}} should be used to approximately normalize them first before inputting them into \eqn{\texttt{zdirect}}.
 }

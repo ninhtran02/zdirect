@@ -16,7 +16,7 @@ STS(pv, alpha, B = 1000, lambdas = 0.5)
 \item{lambdas}{A numeric of candidate \eqn{\lambda} values for the automatic directional Storey, Taylor and Siegmund procedure. If a single value is provided, then the standard directional Storey, Taylor and Siegmund procedure will run.}
 }
 \value{
-The rejections indices.
+The rejection indices.
 }
 \description{
 An adaptive procedure that controls the directional false discovery rate by estimating the null proportion \eqn{\pi_0}.
