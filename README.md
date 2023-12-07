@@ -92,16 +92,30 @@ if(rho == 0){
                        "symm", symm,
                        ".RData")
 }
-if( (rho == 0.50)||(rho == 0.8)){
+if( rho == 0.50){
   outfilename = paste0(getwd(),
-                       "/simResults2/bimodal/nullprop", nullprop,
+                       "/simResultsrhopos05/bimodal/nullprop", nullprop,
                        "mu", mu,
                        "symm", symm,
                        ".RData")
 }
-if( (rho == -0.50)||(rho == -0.8)){
+if( rho == 0.80){
   outfilename = paste0(getwd(),
-                       "/simResults3/bimodal/nullprop", nullprop,
+                       "/simResultsrhopos08/bimodal/nullprop", nullprop,
+                       "mu", mu,
+                       "symm", symm,
+                       ".RData")
+}
+if( rho == -0.50){
+  outfilename = paste0(getwd(),
+                       "/simResultsrhoneg05/bimodal/nullprop", nullprop,
+                       "mu", mu,
+                       "symm", symm,
+                       ".RData")
+}
+if( rho == -0.80){
+  outfilename = paste0(getwd(),
+                       "/simResultsrhoneg08/bimodal/nullprop", nullprop,
                        "mu", mu,
                        "symm", symm,
                        ".RData")
