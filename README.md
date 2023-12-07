@@ -327,15 +327,14 @@ sbatch batch_submission_bimodal.slurm
 
 Assuming the simulation results have been reproduced as in the prior section:
 
-1. Log onto your own HPC account and download the folders *ZDIRECT/simResults*, *ZDIRECT/simResultsrhopos05*, *ZDIRECT/simResultsrhopos08*, *ZDIRECT/simResultsrhoneg05* and *ZDIRECT/simResultsrhoneg08* locally on your PC in a folder called *ZDIRECT*.
+1. Log onto your own HPC account and download the folders *ZDIRECT/simResults*, *ZDIRECT/simResultsrhopos05*, *ZDIRECT/simResultsrhopos08*, *ZDIRECT/simResultsrhoneg05* and *ZDIRECT/simResultsrhoneg08* locally onto your PC in a folder called *ZDIRECT*.
 
 
 2. Run the following R script locally on your PC:
 ```
 library(ggplot2)
 library(latex2exp)
-#setwd("< ONE OF THE FOLLOWING LOCAL FILES ZDIRECT/simResults, ZDIRECT/simResultsrhopos05, ZDIRECT/simResultsrhopos08, ZDIRECT/simResultsrhoneg05 OR ZDIRECT/simResultsrhoneg08>")
-setwd("<ONE OF >")
+setwd("< ONE OF THE FOLLOWING LOCAL FILES ZDIRECT/simResults, ZDIRECT/simResultsrhopos05, ZDIRECT/simResultsrhopos08, ZDIRECT/simResultsrhoneg05 OR ZDIRECT/simResultsrhoneg08>")
 
 method_choice = c(
   "zdirect",
