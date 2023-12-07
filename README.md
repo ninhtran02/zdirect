@@ -303,15 +303,16 @@ done
 
 4. Make sure the  *REBayes*, *ashr*, *dbh* and *Rmosek* R packages are properly installed in the version of R you plan to use. In particular, 
 
-    - The installation instructions of \texttt{ashr} can be found in Matt Stephen's [GitHub page](https://github.com/stephens999/ashr).
+    - The installation instructions of *ashr* can be found in Matt Stephen's [GitHub page](https://github.com/stephens999/ashr).
 
-    - The installation instructions of \texttt{Rmosek} can be found in [here]({https://docs.mosek.com/latest/rmosek/install-interface.html) . The *Rmosek* in turn depends on *MOSEK*, which requires a license; a free one for 365 days can be obtained [here](https://www.mosek.com/products/academic-licenses/) 
+    - The installation instructions of *Rmosek* can be found in [here]({https://docs.mosek.com/latest/rmosek/install-interface.html) . The *Rmosek* in turn depends on *MOSEK*, which requires a license; a free one for 365 days can be obtained [here](https://www.mosek.com/products/academic-licenses/) 
     
 
 5. In your HPC account, change your current directory to the ZDIRECT folder using the ``cd" command:
 ```
 cd    (your own working directory)/ZDIRECT
 ```
+Make sure *main_bimodal2.R*, *job_submission_bimodal.slurm* and *batch_submission_bimodal.slurm* are inside the ZDIRECT folder.
 
 6. To submit the jobs, run the two files *batch\_submission\_bimodal.slurm* with the command:
 ```
@@ -323,7 +324,7 @@ sbatch batch_submission_bimodal.slurm
 
 
 
-## How to reproduce the figures
+## How to reproduce the figures for "Adaptive Procedures for Directional False Discovery Rate Control"
 
 Assuming the simulation results have been reproduced as in the prior section:
 
