@@ -21,11 +21,11 @@
 zdirect = function(betahat, sebetahat,
                  s_l = NULL,
                  s_r =  NULL,
-                 alpha = 0.05,
-                 mixcompdist = c( "halfuniform", "halfnormal"),
+                 alpha = 0.1,
+                 mixcompdist = "halfuniform",
                  prior = "nullbiased",
-                 nullweight = 10,
-                 altweight = 0.9,
+                 nullweight = 0.8,
+                 altweight = 1e+08,
                  nfits = 20,
                  epsilon = 1e-10
                  ){
