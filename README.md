@@ -41,7 +41,7 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 
 1. Log onto your own HPC account.
 
-2. Create an R script called *main_bimodal2.R* as below. Ensure the <TEXT> are addressed according to the user.
+2. Create an R script called *main_bimodal2.R* as follows:
 ```
 # Set the library path
 
@@ -234,7 +234,7 @@ system.time(
 save( list= save_list,   file = outfilename)
 ```
 
-4. Create a slurm file called ** as follows:
+4. Create a slurm file called *job_submission_bimodal.slurm* as follows:
 ```
 #!/bin/bash
 #SBATCH --job-name=dFDR_bimodal
@@ -299,20 +299,17 @@ done
 cd    (your own working directory)/ZDIRECT
 ```
 
-6. To submit the jobs, run the two files \texttt{batch\_submission\_skewnormal.slurm} and \texttt{batch\_submission\_bimodal.slurm} with the two commands:
-\begin{center}
-\texttt{./batch\_submission\_skewnormal.slurm}
-\end{center}
-\begin{center}
+6. To submit the jobs, run the two files *batch\_submission\_bimodal.slurm* with the command:
+```
 \texttt{./batch\_submission\_bimodal.slurm}
-\end{center}
+```
 
-\item The simulations will typically be finished in a few ($\leq 5$) hours, with the resulting data files saved to the two subfolders within \texttt{ZDIRECT/simResults}.
-
-\end{enumerate}
+7. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within \texttt{ZDIRECT/simResults}.
 
 
-\section{How to reproduce the figures}
+
+
+## How to reproduce the figures
 
 Assuming the simulation results have been reproduced as in the prior section:
 
