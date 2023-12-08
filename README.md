@@ -211,7 +211,7 @@ system.time(
     # dBH rejection set
     Sigma <- (1/(1-rho^2))*rho^(abs(outer(1:m, 1:m, "-")))
     res <- dBH_mvgauss(zvals = betahat, Sigma = Sigma, side = "two", alpha = alpha,
-                       gamma = 1, niter = 1, avals_type = "BH")
+                       gamma = 0.9, niter = 1, avals_type = "BH")
     rej_set_dBH = res$rejs
 
     FDP_lfsr= append( FDP_lfsr ,  sum(sign(beta[rej_set_lfsr]) != sign(lfsr_direction[rej_set_lfsr]) )/
@@ -284,7 +284,7 @@ do
   
     for symm in 0.5 0.75 1
     do
-    	for rho in 0 0.50 -0.50
+    	for rho in -0.8	-0.5 0 0.50 0.80
     	do
   
               sbatch /data/gpfs/projects/punim1426/ZDIRECT/job_submission_bimodal.slurm $nullprop $mu $symm $rho
