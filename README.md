@@ -98,10 +98,10 @@ done
 
     - The installation instructions of *ashr* can be found in Matt Stephen's [GitHub page](https://github.com/stephens999/ashr).
 
-    - The installation instructions of *Rmosek* can be found in [here]({https://docs.mosek.com/latest/rmosek/install-interface.html) . The *Rmosek* in turn depends on *MOSEK*, which requires a license; a free one for 365 days can be obtained [here](https://www.mosek.com/products/academic-licenses/) 
+    - The installation instructions of *Rmosek* can be found in [here]({https://docs.mosek.com/latest/rmosek/install-interface.html). The *Rmosek* in turn depends on *MOSEK*, which requires a license; a free one for 365 days can be obtained [here](https://www.mosek.com/products/academic-licenses/). 
     
 
-4. In your HPC account, change your current directory to the ZDIRECT folder using the ``cd" command:
+4. In your HPC account, change your current directory to the ZDIRECT folder using the "cd" command:
 ```
 cd    (your own working directory)/ZDIRECT
 ```
